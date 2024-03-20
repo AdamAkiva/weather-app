@@ -1,0 +1,29 @@
+# Ignore everything
+*
+
+# Exclude folders from above rule
+!**/
+
+# Block previously allowed folders
+**/build/
+**/coverage/
+**/db-dev-data/
+**/node_modules/
+**/cache/
+
+# Exclude source files
+!*.ts
+!*.tsx
+!index.html
+!*.css
+!eslint.config.js
+!loader.js
+
+# Etc
+!*.svg
+!*.json
+!*.sh
+!*.md
+!*.yml
+!Dockerfile
+!.gitignore
