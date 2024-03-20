@@ -1,12 +1,4 @@
-import React, {
-  useCallback,
-  useEffect,
-  useRef,
-  useState,
-  type Dispatch,
-  type SetStateAction
-} from 'react';
-import ReactDOM from 'react-dom/client';
+import type { Dispatch, SetStateAction } from 'react';
 
 /**********************************************************************************/
 
@@ -26,17 +18,8 @@ export type ResolvedValue<T> = T extends (...args: any) => any
 
 /**********************************************************************************/
 
-export type SetState<T> = React.Dispatch<React.SetStateAction<T>>;
+export type SetState<T> = Dispatch<SetStateAction<T>>;
 
 /**********************************************************************************/
 
-export {
-  React,
-  ReactDOM,
-  useCallback,
-  useEffect,
-  useRef,
-  useState,
-  type Dispatch,
-  type SetStateAction
-};
+export { type Dispatch, type SetStateAction };
