@@ -1,9 +1,9 @@
-import { React, ReactDOM } from '@/types';
+import { ReactDOM, StrictMode } from '@/utils';
 
-import './index.css';
+import '@/assets/styles/index.css';
 
 /**********************************************************************************/
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
-  <React.StrictMode></React.StrictMode>
+  <StrictMode></StrictMode>
 );
