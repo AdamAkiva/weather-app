@@ -18,7 +18,7 @@
 :root {
   font-family: 'Poppins';
   line-height: 1.33;
-  font-weight: 400;
+  font-weight: bolder;
 
   color-scheme: light dark;
   color: rgba(255, 255, 255, 0.87);
@@ -27,6 +27,17 @@
   /* Allows kerning and optional ligatures */
   /* See: https://www.gnu.org/software/groff/manual/groff.html.node/Ligatures-and-Kerning.html */
   text-rendering: optimizeLegibility;
+}
+
+/* The first div under body */
+#root {
+  width: 100%;
+  height: 100%;
+}
+
+/* TODO Remove this */
+#root div {
+  border: solid red 1px;
 }
 
 a {
@@ -40,6 +51,7 @@ a:hover {
 }
 
 body {
+  /* Removes the default margin supplied by the browser */
   margin: 0;
   display: flex;
   min-width: 320px;
@@ -60,17 +72,15 @@ button {
   width: 9rem;
   border-radius: 30px;
   border-color: transparent;
-  /* outline is the line drawn around an element, outside the border */
+  /* outline is the line drawn around an element (outside the border) */
   outline-style: none;
   color: white;
   font-weight: bolder;
+  /* The default size is 16px, we want to make sure (across browsers) that the */
+  /* font size of the button matches that size (some browser have different font */
+  /* size for browsers) */
   font-size: 1rem;
   cursor: pointer;
-}
-
-#root {
-  width: 100%;
-  height: 100%;
 }
 
 @media (prefers-color-scheme: light) {
@@ -93,8 +103,5 @@ button {
 
 *::-webkit-scrollbar-thumb {
   border-radius: 5px;
-}
-
-*::-webkit-scrollbar-thumb {
   background-color: rgba(114, 130, 214, 0.46);
 }
