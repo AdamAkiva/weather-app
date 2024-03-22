@@ -29,17 +29,6 @@
   text-rendering: optimizeLegibility;
 }
 
-/* The first div under body */
-#root {
-  width: 100%;
-  height: 100%;
-}
-
-/* TODO Remove this */
-#root div {
-  border: solid red 1px;
-}
-
 a {
   font-weight: 500;
   color: #646cff;
@@ -52,10 +41,7 @@ a:hover {
 
 body {
   /* Removes the default margin supplied by the browser */
-  margin: 0;
-  display: flex;
-  min-width: 320px;
-  min-height: 100vh;
+  margin: 0 auto;
 }
 
 h1 {

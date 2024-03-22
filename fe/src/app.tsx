@@ -3,25 +3,27 @@ import styled from 'styled-components';
 import sunnyImage from '@/assets/images/sunny.jpg';
 
 const WeatherBackground = styled.div`
-  font-size: 1.5rem;
+  width: 100vw;
   height: 100vh;
-  padding: 5rem 5rem;
-  overflow: auto;
-  min-width: 800px;
 `;
 
 const WeatherStyle = styled.div`
-  width: 100%;
-  height: 100%;
-  display: inline-grid;
-  grid-template-rows: 3fr 1fr;
+  display: flex;
+  flex-flow: column wrap;
+  gap: 2em;
 `;
 
 const WeatherImageStyle = styled.div`
-  min-width: 400px;
+  min-height: 50vh;
   background-image: url(${sunnyImage});
   background-repeat: no-repeat;
-  background-size: cover;
+  background-size: contain;
+`;
+
+const WeatherText = styled.div`
+  margin-top: 1.33em;
+  font-size: 1.66em;
+  text-align: center;
 `;
 
 /**********************************************************************************/
@@ -31,7 +33,7 @@ function WeatherImage() {
 }
 
 function WeatherInfo() {
-  return <div>Bamba</div>;
+  return <WeatherText>Bamba</WeatherText>;
 }
 
 export default function App() {
