@@ -6,8 +6,6 @@
 
 # Block previously allowed folders
 **/build/
-**/coverage/
-**/db-dev-data/
 **/node_modules/
 **/cache/
 
@@ -17,7 +15,7 @@
 !index.html
 !*.css
 !eslint.config.js
-!loader.js
+!*.jpg
 
 # Etc
 !*.svg
@@ -25,5 +23,7 @@
 !*.sh
 !*.md
 !*.yml
+!*.ttf
 !Dockerfile
 !.gitignore
+!LICENSE

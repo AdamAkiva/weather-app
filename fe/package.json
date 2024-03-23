@@ -1,0 +1,67 @@
+{
+  "name": "weather-app",
+  "version": "1.0.0",
+  "type": "module",
+  "main": "./src/main.tsx",
+  "scripts": {
+    "start:dev": "vite",
+    "test": "printf 'No tests exist' && exit 1",
+    "lint": "npx tsc --project ./tsconfig.json --noEmit && npx eslint \"src/**/*.{ts,tsx}\"",
+    "check-global-updates": "npx ncu -g",
+    "check-local-updates": "npx ncu",
+    "commit-local-updates": "npx ncu -u",
+    "check-code-deps": "npx depcheck --ignores=prettier",
+    "check-cir-deps": "npx dpdm --no-tree --transform --exit-code circular:1 \"src/**/*.{ts,tsx}\"",
+    "_install-start": "npm install && npm run start:dev",
+    "_test:ci": "printf 'Pipeline does not exist yes' && exit 1",
+    "_build": "npx eslint './src/**/*.tsx' && vite build"
+  },
+  "dependencies": {
+    "react": "~18.2.0",
+    "react-dom": "~18.2.0",
+    "styled-components": "~6.1.8"
+  },
+  "devDependencies": {
+    "@types/node": "~20.11.30",
+    "@types/react": "~18.2.67",
+    "@types/react-dom": "~18.2.22",
+    "@vitejs/plugin-react-swc": "~3.6.0",
+    "depcheck": "~1.4.7",
+    "dpdm": "~3.14.0",
+    "eslint": "~8.57.0",
+    "eslint-config-prettier": "~9.1.0",
+    "eslint-plugin-react": "~7.34.1",
+    "eslint-plugin-react-hooks": "~4.6.0",
+    "eslint-plugin-react-refresh": "~0.4.6",
+    "eslint-plugin-security": "~2.1.1",
+    "npm-check-updates": "~16.14.17",
+    "prettier": "~3.2.5",
+    "typescript": "~5.4.2",
+    "typescript-eslint": "~7.3.1",
+    "vite": "~5.1.6"
+  },
+  "author": "Adam Akiva",
+  "license": "MIT",
+  "private": true,
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/AdamAkiva/weather-app"
+  },
+  "bugs": {
+    "url": "https://github.com/AdamAkiva/weather-app/issues"
+  },
+  "maintainers": [
+    {
+      "name": "Adam Akiva",
+      "email": "adam.akiva14@gmail.com",
+      "url": "https://github.com/AdamAkiva"
+    }
+  ],
+  "contributors": [
+    {
+      "name": "Adam Akiva",
+      "email": "adam.akiva14@gmail.com",
+      "url": "https://github.com/AdamAkiva"
+    }
+  ]
+}

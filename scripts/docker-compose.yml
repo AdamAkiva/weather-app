@@ -1,0 +1,31 @@
+services:
+  weather-app-fe-dev:
+    hostname: weather-app-fe-dev
+    container_name: weather-app-fe-dev
+    restart: unless-stopped
+    build:
+      context: ../fe
+      dockerfile: Dockerfile
+      target: fe-dev
+      args:
+        DOCKER_BUILDKIT: 1
+    user: ${UID}:${GID}
+    environment:
+      - CLIENT_PORT=5611
+      - NODE_ENV=development
+    volumes:
+      - ../fe:/home/node/weather-app:rw
+    stop_grace_period: 2s
+    ports:
+      - "5611:5611"
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "curl -s -o /dev/null -w '%{http_code}' http://localhost:5611 | grep -q '200'"
+        ]
+      interval: 15s
+      timeout: 3s
+      retries: 5
+      start_period: 30s
+    command: npm run _install-start
