@@ -6,6 +6,7 @@ import React, {
   useState
 } from 'react';
 import ReactDOM from 'react-dom/client';
+import { styled } from 'styled-components';
 
 import { getEnvValue, getRuntimeMode } from './env.ts';
 import { uppercaseFirstLetter } from './functions.ts';
@@ -29,6 +30,7 @@ export {
   StrictMode,
   getEnvValue,
   getRuntimeMode,
+  styled,
   uppercaseFirstLetter,
   useCallback,
   useEffect,

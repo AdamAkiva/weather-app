@@ -1,6 +1,6 @@
 import { ReactDOM, StrictMode } from '@/utils';
 
-import App from '@/app.tsx';
+import App from './app.tsx';
 
 import '@/assets/styles/index.css';
 
