@@ -15,6 +15,7 @@
 !index.html
 !*.css
 !eslint.config.js
+!*.jpg
 
 # Etc
 !*.svg
@@ -22,6 +23,7 @@
 !*.sh
 !*.md
 !*.yml
+!*.ttf
 !Dockerfile
 !.gitignore
 !LICENSE
