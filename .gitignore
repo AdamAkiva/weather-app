@@ -8,6 +8,7 @@
 **/build/
 **/node_modules/
 **/cache/
+**/.vite/
 
 # Exclude source files
 !*.ts
