@@ -16,10 +16,10 @@
 !index.html
 !*.css
 !eslint.config.js
-!*.jpg
 
 # Etc
 !*.svg
+!*.jpg
 !*.json
 !*.sh
 !*.md
@@ -28,3 +28,4 @@
 !Dockerfile
 !.gitignore
 !LICENSE
+!.gitkeep

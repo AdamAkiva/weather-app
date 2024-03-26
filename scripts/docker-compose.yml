@@ -16,6 +16,8 @@ services:
     volumes:
       - ../fe:/home/node/weather-app:rw
     stop_grace_period: 2s
+    tty: true
+    stdin_open: true
     ports:
       - "5611:5611"
     healthcheck:

@@ -6,7 +6,7 @@ import { styled } from '@/utils';
 const WeatherStyle = styled.div`
   display: flex;
   flex-flow: column wrap;
-  gap: 2em;
+  gap: 1em;
 `;
 
 /**********************************************************************************/
