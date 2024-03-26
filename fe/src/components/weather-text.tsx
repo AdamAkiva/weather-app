@@ -10,6 +10,10 @@ const WeatherTextStyle = styled.div`
 
 /**********************************************************************************/
 
-export default function WeatherText() {
-  return <WeatherTextStyle>Placeholder</WeatherTextStyle>;
+type WeatherTextProps = { temperature: string };
+
+/**********************************************************************************/
+
+export default function WeatherText({ temperature }: WeatherTextProps) {
+  return <WeatherTextStyle>{temperature}</WeatherTextStyle>;
 }

@@ -1,5 +1,6 @@
 import { WeatherImage, WeatherText } from '@/components';
-import { styled } from '@/utils';
+import { styled, useEffect, useState } from '@/utils';
+import { fetchWeather } from '@/weather';
 
 /**********************************************************************************/
 
@@ -12,10 +13,20 @@ const WeatherStyle = styled.div`
 /**********************************************************************************/
 
 export default function App() {
+  const [weather, setWeather] = useState({ temperature: '0', image: '' });
+
+  useEffect(() => {
+    async function setInitialWeather() {
+      setWeather(await fetchWeather());
+    }
+
+    setInitialWeather();
+  }, []);
+
   return (
     <WeatherStyle>
-      <WeatherImage></WeatherImage>
-      <WeatherText></WeatherText>
+      <WeatherImage image={weather.image}></WeatherImage>
+      <WeatherText temperature={weather.temperature}></WeatherText>
     </WeatherStyle>
   );
 }
