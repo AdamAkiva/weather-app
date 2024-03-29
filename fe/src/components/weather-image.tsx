@@ -2,7 +2,7 @@ import { styled } from '@/utils';
 
 /**********************************************************************************/
 
-const WeatherImageStyle = styled.div<WeatherImageProps>`
+const WeatherImageStyle = styled('div')<WeatherImageProps>`
   min-height: 50vh;
   min-width: 45vw;
   background-image: ${({ image }) => {

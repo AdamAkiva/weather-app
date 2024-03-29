@@ -8,7 +8,7 @@ GID=$(id -g);
 SCRIPT_DIR=$(dirname "$(realpath "$0")");
 PROJ_ROOT_DIR=$(dirname "$SCRIPT_DIR");
 
-NPM_FE_CACHE_FOLDER="cache/fe";
+NPM_CACHE_FOLDER="cache";
 ERR_LOG_FILE=compose_err_logs.txt;
 
 ####################################################################################
@@ -33,7 +33,7 @@ start() {
 
     # When a folder exists and is only populated the permissions of the populated
     # file(s) take on the permission of the root folder, hence the current user
-    mkdir -p "$NPM_FE_CACHE_FOLDER";
+    mkdir -p "$NPM_CACHE_FOLDER";
 
     printf "Building Application...\n\n";
 
