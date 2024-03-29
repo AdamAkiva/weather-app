@@ -9,6 +9,8 @@
 chmod +x ./scripts/start.sh ./scripts/remove.sh
 ```
 
+4. Make sure to add an `.env` file to the scripts folder with the API_KEY
+
 ---
 
 ### Recommended (Will work without them):

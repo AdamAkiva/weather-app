@@ -13,7 +13,7 @@ services:
     environment:
       - CLIENT_PORT=5611
       - WEATHER_APP_API_URL=https://api.weatherapi.com/v1
-      - WEATHER_APP_API_KEY=1d1f6be99c8a49fe8fc85631242903
+      - WEATHER_APP_API_KEY=${WEATHER_APP_API_KEY}
       - NODE_ENV=development
     volumes:
       - ../fe:/home/node/weather-app:rw
