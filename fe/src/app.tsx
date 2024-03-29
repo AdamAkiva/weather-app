@@ -1,9 +1,12 @@
-import { WeatherImage, WeatherText } from '@/components';
-import { styled } from '@/utils';
+import { Loading, WeatherImage, WeatherText } from '@/components';
+import { styled, useEffect, useState } from '@/utils';
+import { fetchWeather } from '@/weather';
 
 /**********************************************************************************/
 
-const WeatherStyle = styled.div`
+type WeatherState = Awaited<ReturnType<typeof fetchWeather>>;
+
+const WeatherStyle = styled('div')`
   display: flex;
   flex-flow: column wrap;
   gap: 1em;
@@ -12,10 +15,35 @@ const WeatherStyle = styled.div`
 /**********************************************************************************/
 
 export default function App() {
+  const [loading, setLoading] = useState(true);
+  const [weather, setWeather] = useState<WeatherState>({
+    location: '',
+    temperature: '',
+    feelsLike: '',
+    image: ''
+  });
+
+  useEffect(() => {
+    async function setInitialWeather() {
+      setWeather(await fetchWeather());
+      setLoading(false);
+    }
+
+    setInitialWeather();
+  }, []);
+
+  if (loading) {
+    return <Loading></Loading>;
+  }
+
   return (
     <WeatherStyle>
-      <WeatherImage></WeatherImage>
-      <WeatherText></WeatherText>
+      <WeatherImage image={weather.image}></WeatherImage>
+      <WeatherText
+        location={weather.location}
+        temperature={weather.temperature}
+        feelsLike={weather.feelsLike}
+      ></WeatherText>
     </WeatherStyle>
   );
 }

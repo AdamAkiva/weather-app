@@ -1,19 +1,13 @@
 import { styled } from '@/utils';
 
-import rainyImage from '@/assets/images/rainy.jpg';
-import sunnyImage from '@/assets/images/sunny.jpg';
-import windyImage from '@/assets/images/windy.jpg';
-
-sunnyImage;
-windyImage;
-rainyImage;
-
 /**********************************************************************************/
 
-const WeatherImageStyle = styled.div`
+const WeatherImageStyle = styled('div')<WeatherImageProps>`
   min-height: 50vh;
   min-width: 45vw;
-  background-image: url(${windyImage});
+  background-image: ${({ image }) => {
+    return `url(${image})`;
+  }};
   background-size: cover;
   background-repeat: no-repeat;
   margin: 5em auto 2em auto;
@@ -21,6 +15,10 @@ const WeatherImageStyle = styled.div`
 
 /**********************************************************************************/
 
-export default function WeatherImage() {
-  return <WeatherImageStyle></WeatherImageStyle>;
+type WeatherImageProps = { image: string };
+
+/**********************************************************************************/
+
+export default function WeatherImage({ image }: WeatherImageProps) {
+  return <WeatherImageStyle image={image}></WeatherImageStyle>;
 }

@@ -12,9 +12,12 @@ services:
     user: ${UID}:${GID}
     environment:
       - CLIENT_PORT=5611
+      - WEATHER_APP_API_URL=https://api.weatherapi.com/v1
+      - WEATHER_APP_API_KEY=${WEATHER_APP_API_KEY}
       - NODE_ENV=development
     volumes:
       - ../fe:/home/node/weather-app:rw
+      - ./cache:/home/node/.npm:rw
     stop_grace_period: 2s
     tty: true
     stdin_open: true

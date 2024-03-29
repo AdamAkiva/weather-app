@@ -1,3 +1,10 @@
+import {
+  CircularProgress,
+  styled,
+  type SxProps,
+  type Theme
+} from '@mui/material';
+import ky, { HTTPError } from 'ky';
 import React, {
   StrictMode,
   useCallback,
@@ -6,7 +13,6 @@ import React, {
   useState
 } from 'react';
 import ReactDOM from 'react-dom/client';
-import { styled } from 'styled-components';
 
 import { getEnvValue, getRuntimeMode } from './env.ts';
 import { uppercaseFirstLetter } from './functions.ts';
@@ -25,11 +31,14 @@ import type {
 /**********************************************************************************/
 
 export {
+  CircularProgress,
+  getEnvValue,
+  getRuntimeMode,
+  HTTPError,
+  ky,
   React,
   ReactDOM,
   StrictMode,
-  getEnvValue,
-  getRuntimeMode,
   styled,
   uppercaseFirstLetter,
   useCallback,
@@ -44,5 +53,7 @@ export {
   type SetState,
   type SetStateAction,
   type SwapKeysValue,
+  type SxProps,
+  type Theme,
   type UnknownObject
 };
