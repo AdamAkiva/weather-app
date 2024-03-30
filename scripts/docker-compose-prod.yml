@@ -1,0 +1,19 @@
+services:
+  weather-app-fe-prod:
+    hostname: weather-app-fe-prod
+    container_name: weather-app-fe-prod
+    restart: unless-stopped
+    build:
+      context: ../fe
+      dockerfile: Dockerfile
+      target: fe-prod
+      args:
+        DOCKER_BUILDKIT: 1
+        WEATHER_APP_API_URL: https://api.weatherapi.com/v1
+        # I don't care about this secret being here since you can see it in
+        # the network tab as well. As long as this is only a FE project, you
+        # can't hide it
+        WEATHER_APP_API_KEY: 1d1f6be99c8a49fe8fc85631242903
+        NODE_ENV: production
+    ports:
+      - 8080:8080

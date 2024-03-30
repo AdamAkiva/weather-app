@@ -13,7 +13,10 @@ services:
     environment:
       - CLIENT_PORT=5611
       - WEATHER_APP_API_URL=https://api.weatherapi.com/v1
-      - WEATHER_APP_API_KEY=${WEATHER_APP_API_KEY}
+        # I don't care about this secret being here since you can see it in
+        # the network tab as well. As long as this is only a FE project, you
+        # can't hide it
+      - WEATHER_APP_API_KEY=1d1f6be99c8a49fe8fc85631242903
       - NODE_ENV=development
     volumes:
       - ../fe:/home/node/weather-app:rw
