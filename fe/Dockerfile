@@ -29,7 +29,7 @@ RUN npm run _build
 
 ################################ Production ########################################
 
-FROM nginxinc/nginx-unprivileged:1.25-alpine-perl as fe-prod
+FROM nginxinc/nginx-unprivileged:1.24.0-alpine-slim as fe-prod
 USER nginx
 
 WORKDIR /usr/share/nginx/html

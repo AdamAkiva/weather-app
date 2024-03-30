@@ -11,7 +11,7 @@ export default class Http {
       window: null,
       throwHttpErrors: true,
       timeout: 8_000,
-      retry: 1
+      retry: 2
     });
   }
 
