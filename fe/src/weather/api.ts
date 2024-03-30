@@ -1,3 +1,4 @@
+import clearImage from '@/assets/images/clear.jpg';
 import rainyImage from '@/assets/images/rainy.jpg';
 import sunnyImage from '@/assets/images/sunny.jpg';
 import unknownWeatherStatusImage from '@/assets/images/unknown.jpg';
@@ -34,7 +35,8 @@ type WeatherAPIResult = {
 
 const knownWeatherStatuses = new Map([
   ['sunny', sunnyImage],
-  ['rainy', rainyImage]
+  ['rainy', rainyImage],
+  ['clear', clearImage]
 ]);
 
 /**********************************************************************************/
