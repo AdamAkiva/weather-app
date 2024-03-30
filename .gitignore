@@ -6,10 +6,9 @@
 
 # Block previously allowed folders
 **/build/
-**/coverage/
-**/db-dev-data/
 **/node_modules/
 **/cache/
+**/.vite/
 
 # Exclude source files
 !*.ts
@@ -17,13 +16,15 @@
 !index.html
 !*.css
 !eslint.config.js
-!loader.js
 
 # Etc
 !*.svg
+!*.jpg
 !*.json
 !*.sh
 !*.md
 !*.yml
+!*.ttf
 !Dockerfile
 !.gitignore
+!LICENSE

@@ -1,0 +1,49 @@
+/* Attribution */
+/* Font used from Google Fonts under CC BY-SA 4.0 */
+/* Font: https://fonts.google.com/specimen/Poppins?query=poppins */
+/* License details: https://creativecommons.org/licenses/by-sa/4.0/ */
+
+/* https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face */
+@font-face {
+  font-family: 'Poppins'; /* https://fonts.google.com/knowledge/using_type/using_web_fonts#reference-the-font-files */
+  font-style: normal;
+  font-weight: normal;
+  src:
+    local('Poppins'),
+    url('../fonts/Poppins-Medium.ttf') format('truetype');
+}
+
+/**********************************************************************************/
+
+:root {
+  color-scheme: light dark;
+  color: rgba(255, 255, 255, 0.87);
+  font-family: 'Poppins';
+  font-synthesis: none;
+  /* Allows kerning and optional ligatures */
+  /* See: https://www.gnu.org/software/groff/manual/groff.html.node/Ligatures-and-Kerning.html */
+  text-rendering: optimizeLegibility;
+}
+
+#root {
+  width: 100vw;
+  height: 100vh;
+}
+
+body {
+  /* Removes the default margin supplied by the browser */
+  margin: 0 auto;
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    color: #213547;
+    background-color: #ffffff;
+  }
+  a:hover {
+    color: #747bff;
+  }
+  button {
+    background-color: #f9f9f9;
+  }
+}
