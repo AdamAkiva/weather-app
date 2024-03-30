@@ -15,6 +15,7 @@ import React, {
 import ReactDOM from 'react-dom/client';
 
 import { getEnvValue, getRuntimeMode } from './env.ts';
+import WeatherAppError from './error.ts';
 import { uppercaseFirstLetter } from './functions.ts';
 import type {
   AddOptional,
@@ -45,6 +46,7 @@ export {
   useEffect,
   useRef,
   useState,
+  WeatherAppError,
   type AddOptional,
   type AddRequired,
   type Dispatch,

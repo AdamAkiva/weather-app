@@ -1,4 +1,4 @@
-import { HTTPError } from '@/utils';
+import { HTTPError, WeatherAppError } from '@/utils';
 
 /**********************************************************************************/
 
@@ -31,7 +31,9 @@ export async function geoLocationWrapper() {
     };
   }
 
-  return await Promise.reject(new Error('Geolocation is not supported'));
+  return await Promise.reject(
+    new WeatherAppError('Geolocation is not supported on your device')
+  );
 }
 
 /**********************************************************************************/
@@ -41,31 +43,30 @@ export async function weatherAPIErrorHandler(err: unknown): Promise<never> {
     throw err;
   }
 
-  let errMsg = '';
   const weatherApiError = ((await err.response.json()) as WeatherAPIError)
     .error;
   switch (weatherApiError.code) {
     case 1006:
-      errMsg = 'No location with the given parameter exists';
+      console.error('No location with the given parameter exists');
       break;
     case 2007:
-      errMsg = 'Too many API key requests this month';
+      console.error('Too many API key requests this month');
       break;
     case 2008:
-      errMsg = 'API has been disabled';
+      console.error('API has been disabled');
       break;
     case 2009:
-      errMsg = 'API key does not have access to the requested resource';
+      console.error('API key does not have access to the requested resource');
       break;
     case 9999:
-      errMsg = 'Internal API error';
+      console.error('Internal API error');
       break;
     default:
-      errMsg = 'Unexpected error';
+      console.error('Unexpected error');
       break;
   }
 
-  throw new Error(errMsg);
+  throw new WeatherAppError('Unexpected error, please try again later');
 }
 
 export function geoLocationErrorHandler(err: unknown): never {
@@ -76,18 +77,18 @@ export function geoLocationErrorHandler(err: unknown): never {
   let errMsg = '';
   switch (err.code) {
     case GeolocationPositionError.PERMISSION_DENIED:
-      errMsg = 'User denied the request for Geolocation';
+      errMsg = 'You must enable geolocation for the application to work';
       break;
     case GeolocationPositionError.POSITION_UNAVAILABLE:
-      errMsg = 'Location information is unavailable';
+      errMsg = 'Location information is unavailable, please try again later';
       break;
     case GeolocationPositionError.TIMEOUT:
-      errMsg = 'The request timed out';
+      errMsg = 'The request timed out, please try again later';
       break;
     default:
-      errMsg = 'Unexpected error';
+      errMsg = 'Unexpected error, contact the developer';
       break;
   }
 
-  throw new Error(errMsg);
+  throw new WeatherAppError(errMsg);
 }
