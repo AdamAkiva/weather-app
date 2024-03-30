@@ -1,3 +1,11 @@
+# Simple weather application
+
+The application is up and running on: https://weather-app-kgebkmlmyq-ew.a.run.app
+
+---
+
+# Local development
+
 ### Prerequisites
 
 1. Linux-based system with POSIX compliant shell (required for the scripts to work)
@@ -52,3 +60,26 @@ chmod +x ./scripts/start.sh ./scripts/remove.sh
 3. Make sure you have the latest docker and docker-compose versions (follow step 2 in the perquisites)
 4. Run `yes | ./scripts/start.sh` and hope for the best
 5. If the problem persists, contact a maintainer/contributor in any way you see fit
+
+---
+
+# Deployment
+
+Currently the application is deployed on google cloud.  
+To deploy a new version, first make sure you have the following (once per machine):
+
+1. [gcloud cli](https://cloud.google.com/sdk/docs/install)
+2. [Push and pull images](https://cloud.google.com/artifact-registry/docs/docker/pushing-and-pulling)
+
+Then do as follows: (On every version update)
+
+1. Run `docker-compose -f docker-compose-prod.yml up --build -d` and check the
+   application works
+2. Tag the created image with the following format:
+   `docker tag <BUILT_IMAGE> europe-west10-docker.pkg.dev/weather-application-418809/personal/<IMAGE_NAME>`
+3. Push the image:
+   `docker push europe-west10-docker.pkg.dev/weather-application-418809/personal/<IMAGE_NAME>`
+4. Stop the running docker-compose:
+   `docker-compose -f docker-compose-prod.yml down`
+
+TODO Make a CI/CD to make this automatic
