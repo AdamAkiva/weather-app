@@ -1,8 +1,14 @@
-import ErrorComponent from './error-component.tsx';
-import Loading from './loading.tsx';
+import { ErrorComponent, LoadingComponent } from './utils/index.ts';
+import WeatherButton from './weather-button.tsx';
 import WeatherImage from './weather-image.tsx';
 import WeatherText from './weather-text.tsx';
 
 /**********************************************************************************/
 
-export { ErrorComponent, Loading, WeatherImage, WeatherText };
+export {
+  ErrorComponent,
+  LoadingComponent,
+  WeatherButton,
+  WeatherImage,
+  WeatherText
+};

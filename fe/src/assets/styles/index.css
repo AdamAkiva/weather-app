@@ -35,6 +35,15 @@ body {
   margin: 0 auto;
 }
 
+button {
+  border-radius: 30px;
+  border: transparent;
+  font-weight: bolder;
+  font-size: 1.1rem;
+  cursor: pointer;
+  background: transparent;
+}
+
 @media (prefers-color-scheme: light) {
   :root {
     color: #213547;

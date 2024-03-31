@@ -12,6 +12,6 @@ const CircularProgressStyle: SxProps<Theme> = {
 
 /**********************************************************************************/
 
-export default function Loading() {
+export default function LoadingComponent() {
   return <CircularProgress sx={CircularProgressStyle} />;
 }

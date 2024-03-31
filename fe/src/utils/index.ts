@@ -20,13 +20,13 @@ import { uppercaseFirstLetter } from './functions.ts';
 import type {
   AddOptional,
   AddRequired,
-  Dispatch,
   MaybeArray,
+  OnClickCb,
   ResolvedValue,
   SetState,
-  SetStateAction,
   SwapKeysValue,
-  UnknownObject
+  UnknownObject,
+  Views
 } from './types.ts';
 
 /**********************************************************************************/
@@ -49,13 +49,13 @@ export {
   WeatherAppError,
   type AddOptional,
   type AddRequired,
-  type Dispatch,
   type MaybeArray,
+  type OnClickCb,
   type ResolvedValue,
   type SetState,
-  type SetStateAction,
   type SwapKeysValue,
   type SxProps,
   type Theme,
-  type UnknownObject
+  type UnknownObject,
+  type Views
 };

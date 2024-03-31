@@ -1,9 +1,5 @@
 import { styled } from '@/utils';
 
-import WeatherFeelsLike from './weather-feelslike.tsx';
-import WeatherLocation from './weather-location.tsx';
-import WeatherTemperature from './weather-temperature.tsx';
-
 /**********************************************************************************/
 
 type WeatherTextProps = {
@@ -19,6 +15,17 @@ const WeatherTextStyle = styled('div')`
   text-align: center;
 `;
 
+const WeatherLocationStyle = styled('div')`
+  margin-bottom: 0.25em;
+  font-size: 1.55em;
+`;
+
+const WeatherTemperatureStyle = styled('div')`
+  margin-bottom: 0.33em;
+`;
+
+const WeatherFeelsLikeStyle = styled('div')``;
+
 /**********************************************************************************/
 
 export default function WeatherText({
@@ -28,9 +35,9 @@ export default function WeatherText({
 }: WeatherTextProps) {
   return (
     <WeatherTextStyle>
-      <WeatherLocation location={location}></WeatherLocation>
-      <WeatherTemperature temperature={temperature}></WeatherTemperature>
-      <WeatherFeelsLike feelslike={feelsLike}></WeatherFeelsLike>
+      <WeatherLocationStyle>{location}</WeatherLocationStyle>
+      <WeatherTemperatureStyle>{temperature}</WeatherTemperatureStyle>
+      <WeatherFeelsLikeStyle>{feelsLike}</WeatherFeelsLikeStyle>
     </WeatherTextStyle>
   );
 }

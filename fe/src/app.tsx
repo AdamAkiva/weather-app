@@ -1,10 +1,18 @@
 import {
   ErrorComponent,
-  Loading,
+  LoadingComponent,
+  WeatherButton,
   WeatherImage,
   WeatherText
 } from '@/components';
-import { WeatherAppError, styled, useEffect, useState } from '@/utils';
+import {
+  WeatherAppError,
+  styled,
+  useEffect,
+  useState,
+  type SetState,
+  type Views
+} from '@/utils';
 import { fetchWeather } from '@/weather';
 
 /**********************************************************************************/
@@ -17,10 +25,22 @@ const WeatherStyle = styled('div')`
   gap: 1em;
 `;
 
+function setOnClickHandler(view: Views, setView: SetState<Views>) {
+  switch (view) {
+    case 'day':
+      return setView('week');
+    case 'week':
+      return setView('day');
+    default:
+      return setView('day');
+  }
+}
+
 /**********************************************************************************/
 
 export default function App() {
   const [loading, setLoading] = useState(true);
+  const [view, setView] = useState<Views>('day');
   const [errMsg, setErrMsg] = useState<string>(null!);
   const [weather, setWeather] = useState<WeatherState>({
     location: '',
@@ -48,21 +68,41 @@ export default function App() {
   }, []);
 
   if (loading) {
-    return <Loading></Loading>;
+    return <LoadingComponent></LoadingComponent>;
   }
 
   if (errMsg) {
     return <ErrorComponent errMsg={errMsg}></ErrorComponent>;
   }
 
+  if (view === 'day') {
+    return (
+      <WeatherStyle>
+        <WeatherImage image={weather.image}></WeatherImage>
+        <WeatherText
+          location={weather.location}
+          temperature={weather.temperature}
+          feelsLike={weather.feelsLike}
+        ></WeatherText>
+        <WeatherButton
+          text="Week"
+          onClickCb={() => {
+            setOnClickHandler(view, setView);
+          }}
+        ></WeatherButton>
+      </WeatherStyle>
+    );
+  }
+
+  // TODO Create the weekly view of the weather
   return (
     <WeatherStyle>
-      <WeatherImage image={weather.image}></WeatherImage>
-      <WeatherText
-        location={weather.location}
-        temperature={weather.temperature}
-        feelsLike={weather.feelsLike}
-      ></WeatherText>
+      <WeatherButton
+        text="Day"
+        onClickCb={() => {
+          setOnClickHandler(view, setView);
+        }}
+      ></WeatherButton>
     </WeatherStyle>
   );
 }

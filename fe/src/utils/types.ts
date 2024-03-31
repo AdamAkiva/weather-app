@@ -18,8 +18,10 @@ export type ResolvedValue<T> = T extends (...args: any) => any
 
 /**********************************************************************************/
 
+export type OnClickCb = () => void;
+
 export type SetState<T> = Dispatch<SetStateAction<T>>;
 
 /**********************************************************************************/
 
-export { type Dispatch, type SetStateAction };
+export type Views = 'day' | 'week';

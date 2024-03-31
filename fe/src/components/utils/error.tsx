@@ -12,6 +12,6 @@ const ErrorStyle = styled('div')`
 
 /**********************************************************************************/
 
-export default function ErrorComponent({ errMsg }: ErrorProps) {
+export default function Error({ errMsg }: ErrorProps) {
   return <ErrorStyle>{errMsg}</ErrorStyle>;
 }

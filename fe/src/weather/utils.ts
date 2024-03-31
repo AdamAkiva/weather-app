@@ -86,7 +86,7 @@ export function geoLocationErrorHandler(err: unknown): never {
       errMsg = 'The request timed out, please try again later';
       break;
     default:
-      errMsg = 'Unexpected error, contact the developer';
+      errMsg = 'Unexpected error, please try again later';
       break;
   }
 
