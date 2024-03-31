@@ -10,7 +10,7 @@ export default class Http {
       cache: 'default',
       window: null,
       throwHttpErrors: true,
-      timeout: 8_000,
+      timeout: 32_000,
       retry: 2
     });
   }

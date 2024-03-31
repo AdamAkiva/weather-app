@@ -20,7 +20,7 @@ export async function geoLocationWrapper() {
       (resolve, reject) => {
         navigator.geolocation.getCurrentPosition(resolve, reject, {
           enableHighAccuracy: true,
-          timeout: 8_000
+          timeout: 32_000
         });
       }
     );
