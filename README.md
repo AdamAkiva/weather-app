@@ -69,12 +69,13 @@ Currently the application is deployed on google cloud.
 To deploy a new version, first make sure you have the following (once per machine):
 
 1. [gcloud cli](https://cloud.google.com/sdk/docs/install)
-2. [Push and pull images](https://cloud.google.com/artifact-registry/docs/docker/pushing-and-pulling)
+2. Run: `gcloud init`
+3. Run: `gcloud auth configure-docker europe-west10-docker.pkg.dev`
 
 Then do as follows: (On every version update)
 
 1. Run `docker-compose -f docker-compose-prod.yml up --build -d` and check the
-   application works
+   application works via http://localhost:8080
 2. Tag the created image with the following format:
    `docker tag <BUILT_IMAGE> europe-west10-docker.pkg.dev/weather-application-418809/personal/<IMAGE_NAME>`
 3. Push the image:
