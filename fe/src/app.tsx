@@ -36,32 +36,63 @@ function setOnClickHandler(view: Views, setView: SetState<Views>) {
   }
 }
 
+async function setDailyWeather(params: {
+  weather: WeatherState;
+  setLoading: SetState<boolean>;
+  setWeather: SetState<WeatherState>;
+  setErrMsg: SetState<string>;
+}) {
+  const { weather, setLoading, setWeather, setErrMsg } = params;
+
+  try {
+    setLoading(true);
+    if (!checkIfEnoughTimePassed(weather.secondsSinceEpoch)) {
+      return;
+    }
+
+    setWeather(await fetchWeather());
+  } catch (err) {
+    if (err instanceof WeatherAppError) {
+      setErrMsg(err.message);
+    } else {
+      setErrMsg('Unknown error, please try again later');
+    }
+  } finally {
+    setLoading(false);
+  }
+}
+
+function checkIfEnoughTimePassed(secondsSinceEpoch: number) {
+  const timeSinceEpoch = Math.round(Date.now() / 1000);
+
+  // Use an api call only once every 15 minutes
+  return timeSinceEpoch - secondsSinceEpoch >= 900_000;
+}
+
 /**********************************************************************************/
 
 export default function App() {
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState<boolean>(true);
   const [view, setView] = useState<Views>('day');
-  const [errMsg, setErrMsg] = useState<string>(null!);
+  const [errMsg, setErrMsg] = useState<string>('');
   const [weather, setWeather] = useState<WeatherState>({
-    location: '',
-    temperature: '',
-    feelsLike: '',
-    image: ''
+    result: {
+      location: '',
+      temperature: '',
+      feelsLike: '',
+      image: ''
+    },
+    secondsSinceEpoch: 0
   });
 
   useEffect(() => {
     async function setInitialWeather() {
-      try {
-        setWeather(await fetchWeather());
-      } catch (err) {
-        if (err instanceof WeatherAppError) {
-          setErrMsg(err.message);
-        } else {
-          setErrMsg('Unknown error, please try again later');
-        }
-      } finally {
-        setLoading(false);
-      }
+      await setDailyWeather({
+        weather: weather,
+        setLoading: setLoading,
+        setWeather: setWeather,
+        setErrMsg: setErrMsg
+      });
     }
 
     setInitialWeather();
@@ -78,11 +109,11 @@ export default function App() {
   if (view === 'day') {
     return (
       <WeatherStyle>
-        <WeatherImage image={weather.image}></WeatherImage>
+        <WeatherImage image={weather.result.image}></WeatherImage>
         <WeatherText
-          location={weather.location}
-          temperature={weather.temperature}
-          feelsLike={weather.feelsLike}
+          location={weather.result.location}
+          temperature={weather.result.temperature}
+          feelsLike={weather.result.feelsLike}
         ></WeatherText>
         <WeatherButton
           text="Week"
@@ -101,6 +132,12 @@ export default function App() {
         text="Day"
         onClickCb={() => {
           setOnClickHandler(view, setView);
+          setDailyWeather({
+            weather: weather,
+            setLoading: setLoading,
+            setWeather: setWeather,
+            setErrMsg: setErrMsg
+          });
         }}
       ></WeatherButton>
     </WeatherStyle>

@@ -19,9 +19,9 @@ import {
 // under `/current.json`
 type WeatherAPIResult = {
   current: {
-    feelslike_c: number;
-    humidity: number;
     temp_c: number;
+    humidity: number;
+    feelslike_c: number;
     condition: {
       text: string;
     };
@@ -55,8 +55,8 @@ export async function fetchWeather() {
     .catch(weatherAPIErrorHandler);
 
   return {
-    ...formatWeatherResult(weatherResult),
-    image: determineImage(weatherResult.current.condition.text)
+    result: formatWeatherResult(weatherResult),
+    secondsSinceEpoch: weatherResult.location.localtime_epoch
   };
 }
 
@@ -69,22 +69,23 @@ function formatWeatherResult(weatherResult: WeatherAPIResult) {
   const temperatureDesc = `It is currently ${current.temp_c}°C with ${current.humidity}% humidity`;
   const feelsLikeDesc = `It feels like ${current.feelslike_c}°C`;
 
+  let weatherImage = knownWeatherStatuses.get(
+    weatherResult.current.condition.text.toLowerCase()
+  );
+  if (!weatherImage) {
+    console.error(
+      `Unknown weather status: ${weatherResult.current.condition.text}`
+    );
+
+    weatherImage = unknownWeatherStatusImage;
+  }
+
   return {
     location: locationDesc,
     temperature: temperatureDesc,
-    feelsLike: feelsLikeDesc
+    feelsLike: feelsLikeDesc,
+    image: weatherImage
   };
-}
-
-function determineImage(status: string) {
-  const weatherStatus = knownWeatherStatuses.get(status.toLowerCase());
-  if (!weatherStatus) {
-    console.error(`Unknown weather status: ${status}`);
-
-    return unknownWeatherStatusImage;
-  }
-
-  return weatherStatus;
 }
 
 function formatTime(timeSinceEpoch: number) {
