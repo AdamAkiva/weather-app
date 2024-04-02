@@ -5,19 +5,18 @@ import {
   WeatherImage,
   WeatherText
 } from '@/components';
+import { styled, useEffect, useState, type Views } from '@/utils';
+
 import {
-  WeatherAppError,
-  styled,
-  useEffect,
-  useState,
-  type SetState,
-  type Views
-} from '@/utils';
-import { fetchWeather } from '@/weather';
+  setDailyWeather,
+  setOnClickHandler,
+  setWeeklyForecast,
+  type ForecastState,
+  type WeatherState
+} from './api/index.ts';
+import { forecastInitialValue, weatherInitialValue } from './utils/index.ts';
 
 /**********************************************************************************/
-
-type WeatherState = Awaited<ReturnType<typeof fetchWeather>>;
 
 const WeatherStyle = styled('div')`
   display: flex;
@@ -25,74 +24,31 @@ const WeatherStyle = styled('div')`
   gap: 1em;
 `;
 
-function setOnClickHandler(view: Views, setView: SetState<Views>) {
-  switch (view) {
-    case 'day':
-      return setView('week');
-    case 'week':
-      return setView('day');
-    default:
-      return setView('day');
-  }
-}
-
-async function setDailyWeather(params: {
-  weather: WeatherState;
-  setLoading: SetState<boolean>;
-  setWeather: SetState<WeatherState>;
-  setErrMsg: SetState<string>;
-}) {
-  const { weather, setLoading, setWeather, setErrMsg } = params;
-
-  try {
-    setLoading(true);
-    if (!checkIfEnoughTimePassed(weather.secondsSinceEpoch)) {
-      return;
-    }
-
-    setWeather(await fetchWeather());
-  } catch (err) {
-    if (err instanceof WeatherAppError) {
-      setErrMsg(err.message);
-    } else {
-      setErrMsg('Unknown error, please try again later');
-    }
-  } finally {
-    setLoading(false);
-  }
-}
-
-function checkIfEnoughTimePassed(secondsSinceEpoch: number) {
-  const timeSinceEpoch = Math.round(Date.now() / 1000);
-
-  // Use an api call only once every 15 minutes
-  return timeSinceEpoch - secondsSinceEpoch >= 900_000;
-}
-
 /**********************************************************************************/
 
-export default function App() {
+export default function View() {
   const [loading, setLoading] = useState<boolean>(true);
   const [view, setView] = useState<Views>('day');
   const [errMsg, setErrMsg] = useState<string>('');
-  const [weather, setWeather] = useState<WeatherState>({
-    result: {
-      location: '',
-      temperature: '',
-      feelsLike: '',
-      image: ''
-    },
-    secondsSinceEpoch: 0
-  });
+  const [weather, setWeather] = useState<WeatherState>(weatherInitialValue);
+  const [forecast, setForecast] = useState<ForecastState>(forecastInitialValue);
 
   useEffect(() => {
     async function setInitialWeather() {
-      await setDailyWeather({
-        weather: weather,
-        setLoading: setLoading,
-        setWeather: setWeather,
-        setErrMsg: setErrMsg
-      });
+      await Promise.all([
+        setDailyWeather({
+          weather: weather,
+          setLoading: setLoading,
+          setWeather: setWeather,
+          setErrMsg: setErrMsg
+        }),
+        setWeeklyForecast({
+          forecast: forecast,
+          setLoading: setLoading,
+          setForecast: setForecast,
+          setErrMsg: setErrMsg
+        })
+      ]);
     }
 
     setInitialWeather();
@@ -119,13 +75,18 @@ export default function App() {
           text="Week"
           onClickCb={() => {
             setOnClickHandler(view, setView);
+            setWeeklyForecast({
+              forecast: forecast,
+              setLoading: setLoading,
+              setForecast: setForecast,
+              setErrMsg: setErrMsg
+            });
           }}
         ></WeatherButton>
       </WeatherStyle>
     );
   }
 
-  // TODO Create the weekly view of the weather
   return (
     <WeatherStyle>
       <WeatherButton

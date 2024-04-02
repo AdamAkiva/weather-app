@@ -78,15 +78,19 @@ export function geoLocationErrorHandler(err: unknown): never {
   switch (err.code) {
     case GeolocationPositionError.PERMISSION_DENIED:
       errMsg = 'You must enable geolocation for the application to work';
+      console.error(errMsg);
       break;
     case GeolocationPositionError.POSITION_UNAVAILABLE:
       errMsg = 'Location information is unavailable, please try again later';
+      console.error(errMsg);
       break;
     case GeolocationPositionError.TIMEOUT:
       errMsg = 'The request timed out, please try again later';
+      console.error(errMsg);
       break;
     default:
       errMsg = 'Unexpected error, please try again later';
+      console.error(errMsg);
       break;
   }
 

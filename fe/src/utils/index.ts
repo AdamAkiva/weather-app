@@ -16,7 +16,7 @@ import ReactDOM from 'react-dom/client';
 
 import { getEnvValue, getRuntimeMode } from './env.ts';
 import WeatherAppError from './error.ts';
-import { uppercaseFirstLetter } from './functions.ts';
+import { formatTime, uppercaseFirstLetter } from './functions.ts';
 import type {
   AddOptional,
   AddRequired,
@@ -33,6 +33,7 @@ import type {
 
 export {
   CircularProgress,
+  formatTime,
   getEnvValue,
   getRuntimeMode,
   HTTPError,

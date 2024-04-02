@@ -1,5 +1,5 @@
-import { fetchWeather } from './api.ts';
+import { fetchForecast, fetchWeather } from './api.ts';
 
 /**********************************************************************************/
 
-export { fetchWeather };
+export { fetchForecast, fetchWeather };

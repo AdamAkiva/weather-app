@@ -25,11 +25,26 @@ type WeatherAPIResult = {
     condition: {
       text: string;
     };
+    last_updated_epoch: number;
   };
   location: {
     country: string;
     name: string;
-    localtime_epoch: number;
+  };
+};
+
+// There are many more fields, to see all of the see this:
+// https://app.swaggerhub.com/apis-docs/WeatherAPI.com/WeatherAPI/1.0.2#/APIs/realtime-weather
+// under `/forecast.json`
+type ForecastAPIResult = WeatherAPIResult & {
+  forecast: {
+    forecastday: {
+      day: {
+        avghumidity: number;
+        avgtemp_c: number;
+        condition: { text: string };
+      };
+    }[];
   };
 };
 
@@ -56,7 +71,28 @@ export async function fetchWeather() {
 
   return {
     result: formatWeatherResult(weatherResult),
-    secondsSinceEpoch: weatherResult.location.localtime_epoch
+    lastUpdate: weatherResult.current.last_updated_epoch,
+    currTime: Date.now()
+  };
+}
+
+export async function fetchForecast() {
+  const API_URL = getEnvValue('API_URL');
+  const API_KEY = getEnvValue('API_KEY');
+
+  const { lat, long } = await geoLocationWrapper().catch(
+    geoLocationErrorHandler
+  );
+  const forecastResult = await httpInstance
+    .get<ForecastAPIResult>(
+      `${API_URL}/forecast.json?key=${API_KEY}&q=${lat},${long}&days=3&alerts=no&aqi=no`
+    )
+    .catch(weatherAPIErrorHandler);
+
+  return {
+    result: formatForecastResult(forecastResult),
+    lastUpdate: forecastResult.current.last_updated_epoch,
+    currTime: Date.now()
   };
 }
 
@@ -65,7 +101,7 @@ export async function fetchWeather() {
 function formatWeatherResult(weatherResult: WeatherAPIResult) {
   const { location, current } = weatherResult;
 
-  const locationDesc = `${uppercaseFirstLetter(location.name)} ${uppercaseFirstLetter(location.country)} - ${formatTime(location.localtime_epoch)}`;
+  const locationDesc = `${uppercaseFirstLetter(location.name)} ${uppercaseFirstLetter(location.country)}`;
   const temperatureDesc = `It is currently ${current.temp_c}°C with ${current.humidity}% humidity`;
   const feelsLikeDesc = `It feels like ${current.feelslike_c}°C`;
 
@@ -88,12 +124,29 @@ function formatWeatherResult(weatherResult: WeatherAPIResult) {
   };
 }
 
-function formatTime(timeSinceEpoch: number) {
-  const time = new Date(timeSinceEpoch * 1000);
-  const hours = time.getHours();
-  const minutes = time.getMinutes();
-  const seconds = time.getSeconds();
+function formatForecastResult(forecastResult: ForecastAPIResult) {
+  const { location, forecast } = forecastResult;
 
-  return `${hours < 10 ? `0${hours}` : hours}:${minutes < 10 ? `0${minutes}` : minutes}:${seconds < 10 ? `0${seconds}` : seconds}
-`;
+  const locationDesc = `${uppercaseFirstLetter(location.name)} ${uppercaseFirstLetter(location.country)}`;
+  const temperatureDesc = forecast.forecastday.map(({ day }) => {
+    let weatherImage = knownWeatherStatuses.get(
+      day.condition.text.toLowerCase()
+    );
+    if (!weatherImage) {
+      console.error(`Unknown weather status: ${day.condition.text}`);
+
+      weatherImage = unknownWeatherStatusImage;
+    }
+
+    return {
+      temperature: day.avgtemp_c,
+      humidity: day.avghumidity,
+      image: weatherImage
+    };
+  });
+
+  return {
+    location: locationDesc,
+    temperature: temperatureDesc
+  };
 }
