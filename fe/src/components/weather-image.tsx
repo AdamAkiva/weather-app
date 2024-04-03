@@ -1,12 +1,12 @@
-import { styled } from '@/utils';
+import { styled, uppercaseFirstLetter } from '@/utils';
 
 /**********************************************************************************/
 
-const WeatherImageStyle = styled('div')<WeatherImageProps>`
+const WeatherImageStyle = styled('div')<Pick<WeatherImageProps, 'imageUrl'>>`
   min-height: 50vh;
   min-width: 45vw;
-  background-image: ${({ image }) => {
-    return `url(${image})`;
+  background-image: ${({ imageUrl }) => {
+    return `url(${imageUrl})`;
   }};
   background-size: cover;
   background-repeat: no-repeat;
@@ -15,10 +15,18 @@ const WeatherImageStyle = styled('div')<WeatherImageProps>`
 
 /**********************************************************************************/
 
-type WeatherImageProps = { image: string };
+type WeatherImageProps = { imageUrl: string; imageDesc: string };
 
 /**********************************************************************************/
 
-export default function WeatherImage({ image }: WeatherImageProps) {
-  return <WeatherImageStyle image={image}></WeatherImageStyle>;
+export default function WeatherImage({
+  imageUrl,
+  imageDesc
+}: WeatherImageProps) {
+  return (
+    <WeatherImageStyle
+      imageUrl={imageUrl}
+      title={uppercaseFirstLetter(imageDesc)}
+    ></WeatherImageStyle>
+  );
 }

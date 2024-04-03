@@ -7,10 +7,10 @@ export const weatherInitialValue: WeatherState = {
     location: '',
     temperature: '',
     feelsLike: '',
-    image: ''
+    image: { url: '', desc: '' }
   },
   lastUpdate: 0,
-  currTime: 0
+  currTime: new Date()
 };
 
 export const forecastInitialValue: ForecastState = {
@@ -19,5 +19,5 @@ export const forecastInitialValue: ForecastState = {
     temperature: []
   },
   lastUpdate: 0,
-  currTime: 0
+  currTime: new Date()
 };

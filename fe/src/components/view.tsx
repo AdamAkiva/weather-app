@@ -1,4 +1,4 @@
-import { styled, useEffect, useState, type Views } from '@/utils';
+import { formatTime, styled, useEffect, useState, type Views } from '@/utils';
 
 import ErrorComponent from './error.tsx';
 import LoadingComponent from './loading.tsx';
@@ -64,9 +64,12 @@ export default function View() {
   if (view === 'day') {
     return (
       <WeatherStyle>
-        <WeatherImage image={weather.result.image}></WeatherImage>
+        <WeatherImage
+          imageUrl={weather.result.image.url}
+          imageDesc={weather.result.image.desc}
+        ></WeatherImage>
         <WeatherText
-          location={weather.result.location}
+          location={`${weather.result.location} - ${formatTime(weather.currTime)}`}
           temperature={weather.result.temperature}
           feelsLike={weather.result.feelsLike}
         ></WeatherText>

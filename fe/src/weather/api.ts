@@ -1,4 +1,6 @@
 import clearImage from '@/assets/images/clear.jpg';
+import mistImage from '@/assets/images/mist.jpg';
+import partlyCloudyImage from '@/assets/images/partly-cloudy.jpg';
 import rainyImage from '@/assets/images/rainy.jpg';
 import sunnyImage from '@/assets/images/sunny.jpg';
 import unknownWeatherStatusImage from '@/assets/images/unknown.jpg';
@@ -50,7 +52,9 @@ type ForecastAPIResult = WeatherAPIResult & {
 const knownWeatherStatuses = new Map([
   ['sunny', sunnyImage],
   ['rainy', rainyImage],
-  ['clear', clearImage]
+  ['clear', clearImage],
+  ['partly cloudy', partlyCloudyImage],
+  ['mist', mistImage]
 ]);
 
 /**********************************************************************************/
@@ -71,7 +75,7 @@ export async function fetchWeather() {
   return {
     result: formatWeatherResult(weatherResult),
     lastUpdate: weatherResult.current.last_updated_epoch,
-    currTime: Date.now()
+    currTime: new Date()
   };
 }
 
@@ -91,7 +95,7 @@ export async function fetchForecast() {
   return {
     result: formatForecastResult(forecastResult),
     lastUpdate: forecastResult.current.last_updated_epoch,
-    currTime: Date.now()
+    currTime: new Date()
   };
 }
 
@@ -104,13 +108,10 @@ function formatWeatherResult(weatherResult: WeatherAPIResult) {
   const temperatureDesc = `It is currently ${current.temp_c}°C with ${current.humidity}% humidity`;
   const feelsLikeDesc = `It feels like ${current.feelslike_c}°C`;
 
-  let weatherImage = knownWeatherStatuses.get(
-    weatherResult.current.condition.text.toLowerCase()
-  );
+  const weatherImageDesc = weatherResult.current.condition.text.toLowerCase();
+  let weatherImage = knownWeatherStatuses.get(weatherImageDesc);
   if (!weatherImage) {
-    console.error(
-      `Unknown weather status: ${weatherResult.current.condition.text}`
-    );
+    console.error(`Unknown weather status: ${weatherImageDesc}`);
 
     weatherImage = unknownWeatherStatusImage;
   }
@@ -119,7 +120,7 @@ function formatWeatherResult(weatherResult: WeatherAPIResult) {
     location: locationDesc,
     temperature: temperatureDesc,
     feelsLike: feelsLikeDesc,
-    image: weatherImage
+    image: { url: weatherImage, desc: weatherImageDesc }
   };
 }
 
@@ -128,11 +129,10 @@ function formatForecastResult(forecastResult: ForecastAPIResult) {
 
   const locationDesc = `${uppercaseFirstLetter(location.name)} ${uppercaseFirstLetter(location.country)}`;
   const temperatureDesc = forecast.forecastday.map(({ day }) => {
-    let weatherImage = knownWeatherStatuses.get(
-      day.condition.text.toLowerCase()
-    );
+    const weatherImageDesc = day.condition.text.toLowerCase();
+    let weatherImage = knownWeatherStatuses.get(weatherImageDesc);
     if (!weatherImage) {
-      console.error(`Unknown weather status: ${day.condition.text}`);
+      console.error(`Unknown weather status: ${weatherImageDesc}`);
 
       weatherImage = unknownWeatherStatusImage;
     }
@@ -140,7 +140,7 @@ function formatForecastResult(forecastResult: ForecastAPIResult) {
     return {
       temperature: day.avgtemp_c,
       humidity: day.avghumidity,
-      image: weatherImage
+      image: { url: weatherImage, desc: weatherImageDesc }
     };
   });
 

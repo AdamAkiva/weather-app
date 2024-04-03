@@ -33,7 +33,7 @@ export async function setDailyWeather(params: {
   try {
     setLoading(true);
     if (!checkIfEnoughTimePassed(weather.lastUpdate)) {
-      return setWeather({ ...weather, currTime: Date.now() });
+      return setWeather({ ...weather, currTime: new Date() });
     }
 
     setWeather(await fetchWeather());
@@ -60,7 +60,7 @@ export async function setWeeklyForecast(params: {
   try {
     setLoading(true);
     if (!checkIfEnoughTimePassed(forecast.lastUpdate)) {
-      return setForecast({ ...forecast, currTime: Date.now() });
+      return setForecast({ ...forecast, currTime: new Date() });
     }
 
     setForecast(await fetchForecast());
