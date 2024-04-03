@@ -12,7 +12,6 @@ export const WEATHER_INITIAL_VALUE: WeatherState = {
   lastUpdate: 0,
   currTime: new Date()
 };
-
 export const FORECAST_INITIAL_VALUE: ForecastState = {
   result: {
     location: '',
@@ -23,5 +22,5 @@ export const FORECAST_INITIAL_VALUE: ForecastState = {
 };
 
 export const SECOND_IN_MILLIS = 1_000;
-
 export const TWENTY_MINUTES_IN_MILLIS = SECOND_IN_MILLIS * 60 * 20;
+export const HOUR_IN_SECONDS = 3_600;

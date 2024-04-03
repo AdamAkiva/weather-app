@@ -1,6 +1,8 @@
 import { WeatherAppError, type SetState, type Views } from '@/utils';
 import { fetchForecast, fetchWeather } from '@/weather';
 
+import { HOUR_IN_SECONDS } from './constants.ts';
+
 /**********************************************************************************/
 
 export type WeatherState = Awaited<ReturnType<typeof fetchWeather>>;
@@ -78,9 +80,9 @@ export async function setWeeklyForecast(params: {
 
 /**********************************************************************************/
 
-function checkIfEnoughTimePassed(secondsSinceEpoch: number) {
-  const timeSinceEpoch = Math.round(Date.now() / 1000);
+function checkIfEnoughTimePassed(apiCallTime: number) {
+  // Convert millis since epoch to seconds since epoch
+  const secondsSinceEpoch = Math.round(Date.now() / 1000);
 
-  // Use an api call only once every hour
-  return timeSinceEpoch - secondsSinceEpoch >= 3_600_000;
+  return secondsSinceEpoch - apiCallTime >= HOUR_IN_SECONDS;
 }
