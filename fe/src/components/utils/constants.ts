@@ -2,7 +2,7 @@ import type { ForecastState, WeatherState } from './view.ts';
 
 /**********************************************************************************/
 
-export const weatherInitialValue: WeatherState = {
+export const WEATHER_INITIAL_VALUE: WeatherState = {
   result: {
     location: '',
     temperature: '',
@@ -13,7 +13,7 @@ export const weatherInitialValue: WeatherState = {
   currTime: new Date()
 };
 
-export const forecastInitialValue: ForecastState = {
+export const FORECAST_INITIAL_VALUE: ForecastState = {
   result: {
     location: '',
     temperature: []
@@ -21,3 +21,7 @@ export const forecastInitialValue: ForecastState = {
   lastUpdate: 0,
   currTime: new Date()
 };
+
+export const SECOND_IN_MILLIS = 1_000;
+
+export const TWENTY_MINUTES_IN_MILLIS = SECOND_IN_MILLIS * 60 * 20;

@@ -1,4 +1,6 @@
-import { styled } from '@/utils';
+import { formatTime, styled, useEffect, useState } from '@/utils';
+
+import { SECOND_IN_MILLIS } from './utils/index.ts';
 
 /**********************************************************************************/
 
@@ -33,9 +35,21 @@ export default function WeatherText({
   temperature,
   feelsLike
 }: WeatherTextProps) {
+  const [date, setDate] = useState(new Date());
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setDate(new Date());
+    }, SECOND_IN_MILLIS);
+
+    return function cleanup() {
+      clearInterval(interval);
+    };
+  }, []);
+
   return (
     <WeatherTextStyle>
-      <WeatherLocationStyle>{location}</WeatherLocationStyle>
+      <WeatherLocationStyle>{`${location} - ${formatTime(date)}`}</WeatherLocationStyle>
       <WeatherTemperatureStyle>{temperature}</WeatherTemperatureStyle>
       <WeatherFeelsLikeStyle>{feelsLike}</WeatherFeelsLikeStyle>
     </WeatherTextStyle>

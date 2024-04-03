@@ -1,4 +1,9 @@
-import { forecastInitialValue, weatherInitialValue } from './constants.ts';
+import {
+  FORECAST_INITIAL_VALUE,
+  SECOND_IN_MILLIS,
+  TWENTY_MINUTES_IN_MILLIS,
+  WEATHER_INITIAL_VALUE
+} from './constants.ts';
 import {
   setDailyWeather,
   setWeeklyForecast,
@@ -10,11 +15,13 @@ import {
 /**********************************************************************************/
 
 export {
-  forecastInitialValue,
+  FORECAST_INITIAL_VALUE,
+  SECOND_IN_MILLIS,
+  TWENTY_MINUTES_IN_MILLIS,
+  WEATHER_INITIAL_VALUE,
   setDailyWeather,
   setWeeklyForecast,
   weatherButtonOnClickEventHandler,
-  weatherInitialValue,
   type ForecastState,
   type WeatherState
 };

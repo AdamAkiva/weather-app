@@ -1,13 +1,14 @@
-import { formatTime, styled, useEffect, useState, type Views } from '@/utils';
+import { styled, useEffect, useState, type Views } from '@/utils';
 
 import ErrorComponent from './error.tsx';
 import LoadingComponent from './loading.tsx';
 import {
-  forecastInitialValue,
+  FORECAST_INITIAL_VALUE,
   setDailyWeather,
   setWeeklyForecast,
+  TWENTY_MINUTES_IN_MILLIS,
+  WEATHER_INITIAL_VALUE,
   weatherButtonOnClickEventHandler,
-  weatherInitialValue,
   type ForecastState,
   type WeatherState
 } from './utils/index.ts';
@@ -26,14 +27,16 @@ const WeatherStyle = styled('div')`
 /**********************************************************************************/
 
 export default function View() {
-  const [loading, setLoading] = useState<boolean>(true);
+  const [loading, setLoading] = useState(true);
   const [view, setView] = useState<Views>('day');
-  const [errMsg, setErrMsg] = useState<string>('');
-  const [weather, setWeather] = useState<WeatherState>(weatherInitialValue);
-  const [forecast, setForecast] = useState<ForecastState>(forecastInitialValue);
+  const [errMsg, setErrMsg] = useState('');
+  const [weather, setWeather] = useState<WeatherState>(WEATHER_INITIAL_VALUE);
+  const [forecast, setForecast] = useState<ForecastState>(
+    FORECAST_INITIAL_VALUE
+  );
 
   useEffect(() => {
-    async function setInitialWeather() {
+    async function fetchWeatherStatus() {
       await Promise.all([
         setDailyWeather({
           weather: weather,
@@ -50,7 +53,15 @@ export default function View() {
       ]);
     }
 
-    setInitialWeather();
+    fetchWeatherStatus();
+
+    const interval = setInterval(() => {
+      fetchWeatherStatus();
+    }, TWENTY_MINUTES_IN_MILLIS);
+
+    return function cleanup() {
+      clearInterval(interval);
+    };
   }, []);
 
   if (loading) {
@@ -69,7 +80,7 @@ export default function View() {
           imageDesc={weather.result.image.desc}
         ></WeatherImage>
         <WeatherText
-          location={`${weather.result.location} - ${formatTime(weather.currTime)}`}
+          location={weather.result.location}
           temperature={weather.result.temperature}
           feelsLike={weather.result.feelsLike}
         ></WeatherText>
