@@ -8,7 +8,10 @@ export type ForecastState = Awaited<ReturnType<typeof fetchForecast>>;
 
 /**********************************************************************************/
 
-export function setOnClickHandler(view: Views, setView: SetState<Views>) {
+export function weatherButtonOnClickEventHandler(
+  view: Views,
+  setView: SetState<Views>
+) {
   switch (view) {
     case 'day':
       return setView('week');
@@ -72,6 +75,8 @@ export async function setWeeklyForecast(params: {
     setLoading(false);
   }
 }
+
+/**********************************************************************************/
 
 function checkIfEnoughTimePassed(secondsSinceEpoch: number) {
   const timeSinceEpoch = Math.round(Date.now() / 1000);

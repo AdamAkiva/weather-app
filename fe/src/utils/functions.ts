@@ -1,6 +1,6 @@
-export const uppercaseFirstLetter = (val: string) => {
+export function uppercaseFirstLetter(val: string) {
   return val.charAt(0).toUpperCase() + val.slice(1);
-};
+}
 
 export function formatTime(timeSinceEpoch: number) {
   const time = new Date(timeSinceEpoch * 1000);

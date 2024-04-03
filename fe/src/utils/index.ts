@@ -17,6 +17,7 @@ import ReactDOM from 'react-dom/client';
 import { getEnvValue, getRuntimeMode } from './env.ts';
 import WeatherAppError from './error.ts';
 import { formatTime, uppercaseFirstLetter } from './functions.ts';
+import { httpInstance } from './http.ts';
 import type {
   AddOptional,
   AddRequired,
@@ -37,6 +38,7 @@ export {
   getEnvValue,
   getRuntimeMode,
   HTTPError,
+  httpInstance,
   ky,
   React,
   ReactDOM,

@@ -1,12 +1,20 @@
 import { forecastInitialValue, weatherInitialValue } from './constants.ts';
-import ErrorComponent from './error.tsx';
-import LoadingComponent from './loading.tsx';
+import {
+  setDailyWeather,
+  setWeeklyForecast,
+  weatherButtonOnClickEventHandler,
+  type ForecastState,
+  type WeatherState
+} from './view.ts';
 
 /**********************************************************************************/
 
 export {
-  ErrorComponent,
-  LoadingComponent,
   forecastInitialValue,
-  weatherInitialValue
+  setDailyWeather,
+  setWeeklyForecast,
+  weatherButtonOnClickEventHandler,
+  weatherInitialValue,
+  type ForecastState,
+  type WeatherState
 };

@@ -1,4 +1,8 @@
-export const weatherInitialValue = {
+import type { ForecastState, WeatherState } from './view.ts';
+
+/**********************************************************************************/
+
+export const weatherInitialValue: WeatherState = {
   result: {
     location: '',
     temperature: '',
@@ -9,7 +13,7 @@ export const weatherInitialValue = {
   currTime: 0
 };
 
-export const forecastInitialValue = {
+export const forecastInitialValue: ForecastState = {
   result: {
     location: '',
     temperature: []

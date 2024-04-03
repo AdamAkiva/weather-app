@@ -2,7 +2,7 @@ type EnvironmentVariables = 'API_KEY' | 'API_URL';
 
 /**********************************************************************************/
 
-export const getEnvValue = (name: EnvironmentVariables) => {
+export function getEnvValue(name: EnvironmentVariables) {
   const envKey = `WEATHER_APP_${name}`;
 
   const envValue = (import.meta.env[envKey] as string | undefined) ?? '';
@@ -11,8 +11,8 @@ export const getEnvValue = (name: EnvironmentVariables) => {
   }
 
   return envValue;
-};
+}
 
-export const getRuntimeMode = () => {
+export function getRuntimeMode() {
   return import.meta.env.MODE;
-};
+}

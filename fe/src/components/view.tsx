@@ -1,20 +1,19 @@
-import {
-  ErrorComponent,
-  LoadingComponent,
-  WeatherButton,
-  WeatherImage,
-  WeatherText
-} from '@/components';
 import { styled, useEffect, useState, type Views } from '@/utils';
 
+import ErrorComponent from './error.tsx';
+import LoadingComponent from './loading.tsx';
 import {
+  forecastInitialValue,
   setDailyWeather,
-  setOnClickHandler,
   setWeeklyForecast,
+  weatherButtonOnClickEventHandler,
+  weatherInitialValue,
   type ForecastState,
   type WeatherState
-} from './api/index.ts';
-import { forecastInitialValue, weatherInitialValue } from './utils/index.ts';
+} from './utils/index.ts';
+import WeatherButton from './weather-button.tsx';
+import WeatherImage from './weather-image.tsx';
+import WeatherText from './weather-text.tsx';
 
 /**********************************************************************************/
 
@@ -74,7 +73,7 @@ export default function View() {
         <WeatherButton
           text="Week"
           onClickCb={() => {
-            setOnClickHandler(view, setView);
+            weatherButtonOnClickEventHandler(view, setView);
             setWeeklyForecast({
               forecast: forecast,
               setLoading: setLoading,
@@ -92,7 +91,7 @@ export default function View() {
       <WeatherButton
         text="Day"
         onClickCb={() => {
-          setOnClickHandler(view, setView);
+          weatherButtonOnClickEventHandler(view, setView);
           setDailyWeather({
             weather: weather,
             setLoading: setLoading,

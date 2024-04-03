@@ -3,9 +3,8 @@ import rainyImage from '@/assets/images/rainy.jpg';
 import sunnyImage from '@/assets/images/sunny.jpg';
 import unknownWeatherStatusImage from '@/assets/images/unknown.jpg';
 
-import { getEnvValue, uppercaseFirstLetter } from '@/utils';
+import { getEnvValue, httpInstance, uppercaseFirstLetter } from '@/utils';
 
-import { httpInstance } from './http.ts';
 import {
   geoLocationErrorHandler,
   geoLocationWrapper,
