@@ -2,17 +2,8 @@ import { HTTPError, WeatherAppError } from '@/utils';
 
 /**********************************************************************************/
 
-type WeatherAPIError = {
-  error: {
-    code: number;
-    message: string;
-  };
-};
-
-/**********************************************************************************/
-
 // Promise wrapper for the geoLocation callback style function
-export async function geoLocationWrapper() {
+export async function getGeoLocation() {
   // On purpose, this checks if geolocation is supported on the device
   // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
   if (navigator.geolocation) {
@@ -43,8 +34,14 @@ export async function weatherAPIErrorHandler(err: unknown): Promise<never> {
     throw err;
   }
 
-  const weatherApiError = ((await err.response.json()) as WeatherAPIError)
-    .error;
+  const weatherApiError = (
+    (await err.response.json()) as {
+      error: {
+        code: number;
+        message: string;
+      };
+    }
+  ).error;
   switch (weatherApiError.code) {
     case 1006:
       console.error('No location with the given parameter exists');

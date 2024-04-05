@@ -1,10 +1,5 @@
-import {
-  CircularProgress,
-  styled,
-  type SxProps,
-  type Theme
-} from '@mui/material';
-import ky, { HTTPError } from 'ky';
+import { CircularProgress, styled } from '@mui/material';
+import { HTTPError } from 'ky';
 import React, {
   StrictMode,
   useCallback,
@@ -26,6 +21,8 @@ import type {
   ResolvedValue,
   SetState,
   SwapKeysValue,
+  SxProps,
+  Theme,
   UnknownObject,
   Views
 } from './types.ts';
@@ -34,22 +31,21 @@ import type {
 
 export {
   CircularProgress,
-  formatTime,
-  getEnvValue,
-  getRuntimeMode,
   HTTPError,
-  httpInstance,
-  ky,
   React,
   ReactDOM,
   StrictMode,
+  WeatherAppError,
+  formatTime,
+  getEnvValue,
+  getRuntimeMode,
+  httpInstance,
   styled,
   uppercaseFirstLetter,
   useCallback,
   useEffect,
   useRef,
   useState,
-  WeatherAppError,
   type AddOptional,
   type AddRequired,
   type MaybeArray,

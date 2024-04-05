@@ -1,3 +1,4 @@
+import type { SxProps, Theme } from '@mui/material';
 import type { Dispatch, SetStateAction } from 'react';
 
 /**********************************************************************************/
@@ -25,3 +26,7 @@ export type SetState<T> = Dispatch<SetStateAction<T>>;
 /**********************************************************************************/
 
 export type Views = 'day' | 'week';
+
+/**********************************************************************************/
+
+export { type SxProps, type Theme };

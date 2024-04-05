@@ -9,7 +9,7 @@ import { getEnvValue, httpInstance, uppercaseFirstLetter } from '@/utils';
 
 import {
   geoLocationErrorHandler,
-  geoLocationWrapper,
+  getGeoLocation,
   weatherAPIErrorHandler
 } from './utils.ts';
 
@@ -63,9 +63,7 @@ export async function fetchWeather() {
   const API_URL = getEnvValue('API_URL');
   const API_KEY = getEnvValue('API_KEY');
 
-  const { lat, long } = await geoLocationWrapper().catch(
-    geoLocationErrorHandler
-  );
+  const { lat, long } = await getGeoLocation().catch(geoLocationErrorHandler);
   const weatherResult = await httpInstance
     .get<WeatherAPIResult>(
       `${API_URL}/current.json?key=${API_KEY}&q=${lat},${long}&aqi=no`
@@ -83,9 +81,7 @@ export async function fetchForecast() {
   const API_URL = getEnvValue('API_URL');
   const API_KEY = getEnvValue('API_KEY');
 
-  const { lat, long } = await geoLocationWrapper().catch(
-    geoLocationErrorHandler
-  );
+  const { lat, long } = await getGeoLocation().catch(geoLocationErrorHandler);
   const forecastResult = await httpInstance
     .get<ForecastAPIResult>(
       `${API_URL}/forecast.json?key=${API_KEY}&q=${lat},${long}&days=3&alerts=no&aqi=no`
