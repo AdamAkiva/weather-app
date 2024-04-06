@@ -1,11 +1,11 @@
-import clearImage from '@/assets/images/clear.jpg';
-import mistImage from '@/assets/images/mist.jpg';
-import partlyCloudyImage from '@/assets/images/partly-cloudy.jpg';
-import rainyImage from '@/assets/images/rainy.jpg';
-import sunnyImage from '@/assets/images/sunny.jpg';
-import unknownWeatherStatusImage from '@/assets/images/unknown.jpg';
+import clearImage from '../assets/images/clear.jpg';
+import mistImage from '../assets/images/mist.jpg';
+import partlyCloudyImage from '../assets/images/partly-cloudy.jpg';
+import rainyImage from '../assets/images/rainy.jpg';
+import sunnyImage from '../assets/images/sunny.jpg';
+import unknownWeatherStatusImage from '../assets/images/unknown.jpg';
 
-import { getEnvValue, httpInstance, uppercaseFirstLetter } from '@/utils';
+import { getEnvValue, httpInstance, uppercaseFirstLetter } from '../utils/index.ts';
 
 import {
   geoLocationErrorHandler,

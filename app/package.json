@@ -16,7 +16,7 @@
     "_test:ci": "printf 'Pipeline does not exist yes' && exit 1",
     "_build": "npx eslint \"src/**/*.{ts,tsx}\" && npm run _build:client && npm run _build:server",
     "_build:client": "vite build --ssrManifest --outDir ./build/client",
-    "_build:server": "vite build --ssr ./src/entry/server.tsx --outDir ./build/server"
+    "_build:server": "vite build --ssr ./src/client/server.tsx --outDir ./build/server"
   },
   "dependencies": {
     "@mui/material": "~5.15.15",

@@ -1,17 +1,24 @@
 services:
-  weather-app-fe-dev:
-    hostname: weather-app-fe-dev
-    container_name: weather-app-fe-dev
+  weather-app-dev:
+    hostname: weather-app-dev
+    container_name: weather-app-dev
     restart: unless-stopped
     build:
-      context: ../fe
+      context: ../app
       dockerfile: Dockerfile
-      target: fe-dev
+      target: app-dev
       args:
         DOCKER_BUILDKIT: 1
     user: ${UID}:${GID}
     environment:
-      - CLIENT_PORT=5611
+      - SERVER_PORT=5611
+      - SERVER_DEBUG_PORT=5612
+      - TEST_SERVER_PORT=5613
+      - SERVER_URL=http://localhost
+      - API_ROUTE=v0/api
+      - HEALTH_CHECK_ROUTE=health
+      - ALLOWED_HOSTS=localhost
+      - ALLOWED_ORIGINS=*
       - WEATHER_APP_API_URL=https://api.weatherapi.com/v1
         # I don't care about this secret being here since you can see it in
         # the network tab as well. As long as this is only a FE project, you
@@ -19,7 +26,7 @@ services:
       - WEATHER_APP_API_KEY=1d1f6be99c8a49fe8fc85631242903
       - NODE_ENV=development
     volumes:
-      - ../fe:/home/node/weather-app:rw
+      - ../app:/home/node/weather-app:rw
       - ./cache:/home/node/.npm:rw
     stop_grace_period: 2s
     tty: true
@@ -30,7 +37,7 @@ services:
       test:
         [
           "CMD-SHELL",
-          "curl -s -o /dev/null -w '%{http_code}' http://localhost:5611 | grep -q '200'"
+          "curl -s -o /dev/null -w '%{http_code}' http://localhost:5611/ready | grep -q '200'"
         ]
       interval: 15s
       timeout: 3s

@@ -1,10 +1,4 @@
-import { readFile } from 'node:fs/promises';
-import { createServer } from 'node:http';
-
 import { CircularProgress, styled } from '@mui/material';
-import compress from 'compression';
-import cors from 'cors';
-import express from 'express';
 import { HTTPError } from 'ky';
 import React, {
   StrictMode,
@@ -31,8 +25,7 @@ import type {
   SxProps,
   Theme,
   UnknownObject,
-  Views,
-  ViteDevServer
+  Views
 } from './types.ts';
 
 /**********************************************************************************/
@@ -43,16 +36,11 @@ export {
   React,
   StrictMode,
   WeatherAppError,
-  compress,
-  cors,
-  createServer,
-  express,
   formatTime,
   getEnvValue,
   getRuntimeMode,
   httpInstance,
   hydrateRoot,
-  readFile,
   renderToString,
   styled,
   uppercaseFirstLetter,
@@ -70,6 +58,5 @@ export {
   type SxProps,
   type Theme,
   type UnknownObject,
-  type Views,
-  type ViteDevServer
+  type Views
 };

@@ -1,12 +1,12 @@
 services:
-  weather-app-fe-prod:
-    hostname: weather-app-fe-prod
-    container_name: weather-app-fe-prod
+  weather-app-prod:
+    hostname: weather-app-prod
+    container_name: weather-app-prod
     restart: unless-stopped
     build:
-      context: ../fe
+      context: ../app
       dockerfile: Dockerfile
-      target: fe-prod
+      target: app-prod
       args:
         DOCKER_BUILDKIT: 1
         WEATHER_APP_API_URL: https://api.weatherapi.com/v1

@@ -1,4 +1,4 @@
-import { styled, uppercaseFirstLetter } from '@/utils';
+import { styled, uppercaseFirstLetter } from '../utils';
 
 /**********************************************************************************/
 

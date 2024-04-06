@@ -22,5 +22,5 @@
   // Allow and enforces the experimental flat config format (should be removed after it is stable)
   // Using the old format WILL NOT WORK with the setting
   "eslint.experimental.useFlatConfig": true,
-  "eslint.workingDirectories": [{ "pattern": "./fe" }]
+  "eslint.workingDirectories": [{ "pattern": "./app" }]
 }

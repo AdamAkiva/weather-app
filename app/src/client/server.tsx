@@ -1,5 +1,5 @@
-import { View } from '@/components';
-import { renderToString, StrictMode } from '@/utils';
+import { View } from './components';
+import { StrictMode, renderToString } from './utils';
 
 /**********************************************************************************/
 

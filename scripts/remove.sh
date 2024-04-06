@@ -8,8 +8,8 @@ GID=$(id -g);
 SCRIPT_DIR=$(dirname "$(realpath "$0")");
 PROJ_ROOT_DIR=$(dirname "$SCRIPT_DIR");
 
-FE_DIR="$PROJ_ROOT_DIR"/fe;
-FE_MODULES_FOLDER="$FE_DIR"/node_modules;
+APP_DIR="$PROJ_ROOT_DIR"/app;
+APP_MODULES_FOLDER="$APP_DIR"/node_modules;
 
 ####################################################################################
 
@@ -41,7 +41,7 @@ remove_node_modules() {
     printf "Do you wish to remove node_modules folder? (y/n) ";
     read -r opn;
     if [ "${opn:-n}" = "y" ]; then
-        rm -rf "$FE_MODULES_FOLDER";
+        rm -rf "$APP_MODULES_FOLDER";
     fi
 
     return 0;

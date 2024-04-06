@@ -1,4 +1,4 @@
-import { styled, useEffect, useState, type Views } from '@/utils';
+import { styled, useEffect, useState, type Views } from '../utils/index.ts';
 
 import ErrorComponent from './error.tsx';
 import LoadingComponent from './loading.tsx';

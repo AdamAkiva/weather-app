@@ -1,5 +1,3 @@
-import { fileURLToPath } from 'node:url';
-
 import react from '@vitejs/plugin-react-swc';
 import { defineConfig, type UserConfig } from 'vite';
 
@@ -12,15 +10,7 @@ export default defineConfig(({ command }): UserConfig => {
     root: './',
     envPrefix: 'WEATHER_APP_',
     publicDir: './public',
-    plugins: [react()],
-    resolve: {
-      alias: [
-        {
-          find: '@',
-          replacement: fileURLToPath(new URL('./src', import.meta.url))
-        }
-      ]
-    }
+    plugins: [react()]
   };
 
   if (command === 'build') {
@@ -42,7 +32,7 @@ export default defineConfig(({ command }): UserConfig => {
     },
     server: {
       host: '0.0.0.0',
-      port: Number(process.env.CLIENT_PORT),
+      port: Number(process.env.SERVER_PORT),
       strictPort: true
     }
   };

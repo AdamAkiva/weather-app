@@ -1,6 +1,6 @@
-import { formatTime, styled, useEffect, useState } from '@/utils';
+import { formatTime, styled, useEffect, useState } from '../utils';
 
-import { SECOND_IN_MILLIS } from './utils/index.ts';
+import { SECOND_IN_MILLIS } from './utils';
 
 /**********************************************************************************/
 

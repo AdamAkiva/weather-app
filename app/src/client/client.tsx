@@ -1,7 +1,7 @@
-import { View } from '@/components';
-import { hydrateRoot, StrictMode } from '@/utils';
+import { View } from './components';
+import { StrictMode, hydrateRoot } from './utils';
 
-import '@/assets/styles/index.css';
+import './assets/styles/index.css';
 
 /**********************************************************************************/
 

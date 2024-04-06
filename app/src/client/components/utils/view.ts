@@ -1,5 +1,5 @@
-import { WeatherAppError, type SetState, type Views } from '@/utils';
-import { fetchForecast, fetchWeather } from '@/weather';
+import { WeatherAppError, type SetState, type Views } from '../../utils/index.ts';
+import { fetchForecast, fetchWeather } from '../../weather/index.ts';
 
 import { HOUR_IN_SECONDS } from './constants.ts';
 

@@ -1,4 +1,4 @@
-import { CircularProgress, type SxProps, type Theme } from '@/utils';
+import { CircularProgress, type SxProps, type Theme } from '../utils';
 
 /**********************************************************************************/
 

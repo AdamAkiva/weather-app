@@ -19,15 +19,20 @@ Error.stackTraceLimit = 256;
 
 /**********************************************************************************/
 
-import { HttpServer } from './entry/index.ts';
+import { HttpServer, getEnv } from './server/index.ts';
 
 /**********************************************************************************/
 
 async function main() {
-  const server = new HttpServer();
+  const { mode, server: serverEnv } = getEnv();
 
-  await server.attachConfigurationMiddlewares(new Set());
-  server.setupSSR();
+  const server = new HttpServer(mode);
+
+  await server.attachConfigurationMiddlewares(serverEnv.allowedOrigins);
+  server.attachRoutesMiddleware(serverEnv.healthCheck.allowedHosts, {
+    api: `/${serverEnv.apiRoute}`,
+    health: `/${serverEnv.healthCheck.route}`
+  });
 
   // Attaching the event handlers after the server initialization for two reasons.
   // Firstly, if an error occurred before this part, it is 98.7% a developer
@@ -49,9 +54,10 @@ async function main() {
     .once('unhandledRejection', globalErrorHandler(server, 'rejection'))
     .once('uncaughtException', globalErrorHandler(server, 'exception'));
 
-  server.listen(5611, () => {
+  server.listen(serverEnv.port, () => {
     console.info(
-      `Server is running in 'development' mode on: http://localhost:5611`
+      `Server is running in '${mode}' mode on:` +
+        ` ${serverEnv.url}:${serverEnv.port}/${serverEnv.apiRoute}`
     );
   });
 }

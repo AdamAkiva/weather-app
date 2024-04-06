@@ -1,4 +1,4 @@
-import { HTTPError, WeatherAppError } from '@/utils';
+import { HTTPError, WeatherAppError } from '../utils';
 
 /**********************************************************************************/
 

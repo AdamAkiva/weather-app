@@ -1,4 +1,4 @@
-import { styled, type OnClickCb } from '@/utils';
+import { styled, type OnClickCb } from '../utils';
 
 /**********************************************************************************/
 

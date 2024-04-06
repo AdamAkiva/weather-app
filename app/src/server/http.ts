@@ -1,11 +1,14 @@
-import {
-  compress,
-  cors,
-  createServer,
-  express,
-  readFile,
-  type ViteDevServer
-} from '../utils/index.js';
+import { readFile } from 'node:fs/promises';
+import { createServer } from 'node:http';
+
+import compress from 'compression';
+import cors from 'cors';
+import express from 'express';
+import type { ViteDevServer } from 'vite';
+
+import * as Middlewares from './middleware.ts';
+import type { Mode, NextFunction, Request, Response } from './types.ts';
+import { isProductionMode } from './utils/index.ts';
 
 /**********************************************************************************/
 
@@ -19,16 +22,15 @@ export default class HttpServer {
     'OPTIONS'
   ] as const);
 
-  private readonly _isProductionMode;
-  private _templateHtml: string;
-
+  private readonly _mode;
   private readonly _app;
   private readonly _server;
 
+  private _templateHtml: string;
   private _vite: ViteDevServer | undefined;
 
-  public constructor() {
-    this._isProductionMode = import.meta.env.PROD;
+  public constructor(mode: Mode) {
+    this._mode = mode;
 
     // Disable 'x-powered-by' should be pretty clear. Reason to disable etag
     // can be understood by this comprehensive answer: https://stackoverflow.com/a/67929691
@@ -54,6 +56,7 @@ export default class HttpServer {
 
   public async attachConfigurationMiddlewares(allowedOrigins: Set<string>) {
     this._app.use(
+      Middlewares.checkMethod(HttpServer.ALLOWED_METHODS),
       cors({
         methods: Array.from(HttpServer.ALLOWED_METHODS),
         origin:
@@ -65,7 +68,7 @@ export default class HttpServer {
       }),
       compress()
     );
-    if (!this._isProductionMode) {
+    if (!isProductionMode(this._mode)) {
       const { createServer: createViteServer } = await import('vite');
 
       this._vite = await createViteServer({
@@ -102,19 +105,30 @@ export default class HttpServer {
     }
   }
 
-  public setupSSR() {
-    this._app.use('*', async (req, res, next) => {
+  public attachRoutesMiddleware(
+    allowedHosts: Set<string>,
+    routes: { api: string; health: string }
+  ) {
+    this._app.get(routes.health, Middlewares.healthCheck(allowedHosts));
+    this._app.use('*', this.setupSSR());
+    this._app.use(Middlewares.handleMissedRoutes, Middlewares.errorHandler);
+  }
+
+  /********************************************************************************/
+
+  private setupSSR() {
+    return async (req: Request, res: Response, next: NextFunction) => {
       try {
         const url = req.originalUrl;
 
         let template: string = null!;
         let render: (url: string) => Promise<{ head?: string; html?: string }> =
           null!;
-        if (!this._isProductionMode) {
+        if (!isProductionMode(this._mode)) {
           // In dev mode always read the static file(s)
           template = await readFile('./index.html', 'utf-8');
           template = await this._vite!.transformIndexHtml(url, template);
-          render = (await this._vite!.ssrLoadModule('/src/entry/client.tsx'))
+          render = (await this._vite!.ssrLoadModule('/src/client/server.tsx'))
             .render;
         } else {
           // In production cache the static assets
@@ -126,7 +140,7 @@ export default class HttpServer {
           }
           template = this._templateHtml;
           // @ts-expect-error - Build folder does not exist on local machine
-          render = (await import('./build/server/entry/server.js')).render;
+          render = (await import('./build/server/server.js')).render;
         }
 
         const rendered = await render(url);
@@ -143,10 +157,8 @@ export default class HttpServer {
 
         return next(err);
       }
-    });
+    };
   }
-
-  /********************************************************************************/
 
   private _attachConfigurations() {
     // Every configuration referring to sockets here, talks about network/tcp
