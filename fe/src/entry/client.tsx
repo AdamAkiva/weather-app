@@ -1,11 +1,12 @@
 import { View } from '@/components';
-import { ReactDOM, StrictMode } from '@/utils';
+import { hydrateRoot, StrictMode } from '@/utils';
 
 import '@/assets/styles/index.css';
 
 /**********************************************************************************/
 
-ReactDOM.createRoot(document.getElementById('root')!).render(
+hydrateRoot(
+  document.getElementById('root')!,
   <StrictMode>
     <View />
   </StrictMode>

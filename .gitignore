@@ -16,6 +16,7 @@
 !index.html
 !*.css
 !eslint.config.js
+!loader.js
 
 # Etc
 !*.svg

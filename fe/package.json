@@ -2,9 +2,9 @@
   "name": "weather-app",
   "version": "1.0.0",
   "type": "module",
-  "main": "./src/main.tsx",
+  "main": "./src/main.ts",
   "scripts": {
-    "start:dev": "vite",
+    "start:dev": "DEBUG=dashboard:* npx nodemon --config ./nodemon.json ./src/main.ts",
     "test": "printf 'No tests exist' && exit 1",
     "lint": "npx tsc --project ./tsconfig.json --noEmit && npx eslint \"src/**/*.{ts,tsx}\"",
     "check-global-updates": "npx ncu -g",
@@ -14,16 +14,26 @@
     "check-cir-deps": "npx dpdm --no-tree --transform --exit-code circular:1 \"src/**/*.{ts,tsx}\"",
     "_install-start": "npm install && npm run start:dev",
     "_test:ci": "printf 'Pipeline does not exist yes' && exit 1",
-    "_build": "npx eslint \"src/**/*.{ts,tsx}\" && vite build"
+    "_build": "npx eslint \"src/**/*.{ts,tsx}\" && npm run _build:client && npm run _build:server",
+    "_build:client": "vite build --ssrManifest --outDir ./build/client",
+    "_build:server": "vite build --ssr ./src/entry/server.tsx --outDir ./build/server"
   },
   "dependencies": {
     "@mui/material": "~5.15.15",
     "@emotion/styled": "~11.11.5",
+    "compression": "~1.7.4",
+    "cors": "~2.8.5",
+    "express": "~4.19.2",
+    "helmet": "~7.1.0",
     "ky": "~1.2.3",
     "react": "~18.2.0",
-    "react-dom": "~18.2.0"
+    "react-dom": "~18.2.0",
+    "sirv": "~2.0.4"
   },
   "devDependencies": {
+    "@types/compression": "~1.7.5",
+    "@types/cors": "~2.8.17",
+    "@types/express": "~4.17.21",
     "@types/node": "~20.12.4",
     "@types/react": "~18.2.74",
     "@types/react-dom": "~18.2.24",
@@ -37,8 +47,10 @@
     "eslint-plugin-react-refresh": "~0.4.6",
     "eslint-plugin-security": "~2.1.1",
     "globals": "~15.0.0",
+    "nodemon": "~3.1.0",
     "npm-check-updates": "~16.14.18",
     "prettier": "~3.2.5",
+    "ts-node": "~10.9.2",
     "typescript": "~5.4.4",
     "typescript-eslint": "~7.5.0",
     "vite": "~5.2.8"

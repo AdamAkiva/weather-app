@@ -29,6 +29,8 @@ export default tslint.config({
     globals: {
       ...globals.builtin,
       ...browserGlobals,
+      ...globals.nodeBuiltin,
+      ...globals.node,
       console: true
     },
     ecmaVersion: 'latest',

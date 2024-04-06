@@ -1,5 +1,6 @@
 import type { SxProps, Theme } from '@mui/material';
 import type { Dispatch, SetStateAction } from 'react';
+import type { ViteDevServer } from 'vite';
 
 /**********************************************************************************/
 
@@ -29,4 +30,4 @@ export type Views = 'day' | 'week';
 
 /**********************************************************************************/
 
-export { type SxProps, type Theme };
+export { type SxProps, type Theme, type ViteDevServer };
